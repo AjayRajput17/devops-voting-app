@@ -18,8 +18,10 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/result/Dockerfile'
   tag: '$(Build.BuildId)'
 
+# pool:
+#   name: 'azureagent'
 pool:
-  name: 'azureagent'
+  vmImage: 'ubuntu-latest'
 
 stages:
 - stage: Build
