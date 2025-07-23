@@ -1,5 +1,42 @@
 # Example Voting App
+
+
+## Project Report
 📄 **[Click here to view the full project report](./voting-app-report.pdf)**
+
+## Project Overview
+The Example Voting App is a distributed microservices-based web application that demonstrates fundamental DevOps practices. It showcases the orchestration and deployment of containerized services using Docker, Docker Swarm, and Kubernetes, with CI/CD pipelines implemented for automation.
+
+This application is composed of five main components:
+
+•	A Python-based frontend voting app
+
+•	Redis message queue for vote handling
+
+•	A .NET Core worker service to process the votes
+
+•	A Postgres database for persistent storage
+
+•	A Node.js-based result app for real-time vote display
+
+## Technologies Used
+
+•	Frontend: Python (Vote App), Node.js (Results App)
+
+•	Backend Worker: .NET Core
+
+•	Database: PostgreSQL
+
+•	Messaging Queue: Redis
+
+•	Containerization: Docker, Docker Compose
+
+•	Orchestration: Docker Swarm & Kubernetes
+
+•	CI/CD Tool: GitHub Actions + ArgoCD
+
+•	Cloud Platform: Microsoft Azure (AKS Cluster)
+
 A simple distributed application running across multiple Docker containers.
 
 ## Getting started
@@ -56,12 +93,8 @@ kubectl delete -f k8s-specifications/
 * A [Postgres](https://hub.docker.com/_/postgres/) database backed by a Docker volume
 * A [Node.js](/result) web app which shows the results of the voting in real time
 
-## Notes
+This project demonstrates the complete lifecycle of a microservices-based application, including development, containerization, orchestration, and deployment on cloud infrastructure. It also integrates modern DevOps practices such as CI/CD pipelines and GitOps via ArgoCD.
 
-The voting application only accepts one vote per client browser. It does not register additional votes if a vote has already been submitted from a client.
 
-This isn't an example of a properly architected perfectly designed distributed app... it's just a simple
-example of the various types of pieces and languages you might see (queues, persistent data, etc), and how to
-deal with them in Docker at a basic level.
 
 
