@@ -1,5 +1,5 @@
 # Example Voting App
-
+📄 **[Click here to view the full project report](./voting-app-report.pdf)**
 A simple distributed application running across multiple Docker containers.
 
 ## Getting started
