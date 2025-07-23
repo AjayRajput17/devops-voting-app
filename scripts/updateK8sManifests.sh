@@ -3,7 +3,7 @@
 set -x
 
 # Validate input arguments
-if [ "$#" -ne 3 ]; then
+if [ $# -ne 3 ]; then
   echo "Usage: $0 <service-name> <image-name> <tag>"
   exit 1
 fi
@@ -15,7 +15,7 @@ TAG="$3"
 # Set the repository URL
 REPO_URL="https://BJZUva6NIxfVGFJ6PwZHVvdk7iKpwS3wOpWZSYeXAywfco9feNCBJQQJ99BGACAAAAA6RLJmAAASAZDO4G7w@dev.azure.com/ajayingle17/voting-app/_git/voting-app"
 
-# Clone the git repository into a temp directory
+# Clone the git repository into the /tmp directory
 TEMP_DIR="/tmp/temp_repo"
 git clone "$REPO_URL" "$TEMP_DIR"
 
@@ -24,7 +24,7 @@ cd "$TEMP_DIR" || exit 1
 
 TARGET_FILE="k8s-specifications/${SERVICE_NAME}-deployment.yaml"
 
-# Check if the target file exists
+# Check if target file exists
 if [ ! -f "$TARGET_FILE" ]; then
   echo "Error: File $TARGET_FILE not found!"
   exit 1
@@ -33,7 +33,7 @@ fi
 echo "Before update:"
 cat "$TARGET_FILE"
 
-# Replace the image line using sed
+# Safely replace the image line using sed
 sed -i "s|\(image:\s*\).*|\1${IMAGE_NAME}:${TAG}|g" "$TARGET_FILE"
 
 echo "After update:"
@@ -42,7 +42,7 @@ cat "$TARGET_FILE"
 # Stage the changes
 git add "$TARGET_FILE"
 
-# Commit only if changes exist
+# Commit if there are any changes
 if ! git diff --cached --quiet; then
   git commit -m "Update image to ${IMAGE_NAME}:${TAG} in ${SERVICE_NAME}-deployment.yaml"
   git push
