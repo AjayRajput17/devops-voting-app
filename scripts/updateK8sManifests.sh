@@ -2,54 +2,27 @@
 
 set -x
 
-# Validate input arguments
-if [ $# -ne 3 ]; then
-  echo "Usage: $0 <service-name> <image-name> <tag>"
-  exit 1
-fi
-
-SERVICE_NAME="$1"
-
-IMAGE_NAME="$2"
-TAG="$3"
-
 # Set the repository URL
-REPO_URL="https://BJZUva6NIxfVGFJ6PwZHVvdk7iKpwS3wOpWZSYeXAywfco9feNCBJQQJ99BGACAAAAA6RLJmAAASAZDO4G7w@dev.azure.com/ajayingle17/voting-app/_git/voting-app"
+REPO_URL="https://<ACCESS-TOKEN>@dev.azure.com/<AZURE-DEVOPS-ORG-NAME>/voting-app/_git/voting-app"
 
 # Clone the git repository into the /tmp directory
-TEMP_DIR="/tmp/temp_repo"
-git clone "$REPO_URL" "$TEMP_DIR"
+git clone "$REPO_URL" /tmp/temp_repo
 
 # Navigate into the cloned repository directory
-cd "$TEMP_DIR" || exit 1
+cd /tmp/temp_repo
 
-TARGET_FILE="k8s-specifications/${SERVICE_NAME}-deployment.yaml"
+# Make changes to the Kubernetes manifest file(s)
+# For example, let's say you want to change the image tag in a deployment.yaml file
+sed -i "s|image:.*|image: <ACR-REGISTRY-NAME>/$2:$3|g" k8s-specifications/$1-deployment.yaml
 
-# Check if target file exists
-if [ ! -f "$TARGET_FILE" ]; then
-  echo "Error: File $TARGET_FILE not found!"
-  exit 1
-fi
+# Add the modified files
+git add .
 
-echo "Before update:"
-cat "$TARGET_FILE"
+# Commit the changes
+git commit -m "Update Kubernetes manifest"
 
-# Safely replace the image line using sed
-sed -i "s|\(image:\s*\).*|\1${IMAGE_NAME}:${TAG}|g" "$TARGET_FILE"
+# Push the changes back to the repository
+git push
 
-echo "After update:"
-cat "$TARGET_FILE"
-
-# Stage the changes
-git add "$TARGET_FILE"
-
-# Commit if there are any changes
-if ! git diff --cached --quiet; then
-  git commit -m "Update image to ${IMAGE_NAME}:${TAG} in ${SERVICE_NAME}-deployment.yaml"
-  git push
-else
-  echo "No changes to commit."
-fi
-
-# Cleanup
-rm -rf "$TEMP_DIR"
+# Cleanup: remove the temporary directory
+rm -rf /tmp/temp_repo
