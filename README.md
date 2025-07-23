@@ -64,11 +64,4 @@ This isn't an example of a properly architected perfectly designed distributed a
 example of the various types of pieces and languages you might see (queues, persistent data, etc), and how to
 deal with them in Docker at a basic level.
 
-🚧 Project Status: 80% Complete
-This project is currently 80% complete. Due to time constraints, the remaining features and final refinements will be pushed shortly before the final deadline.
 
-Most major functionalities have been implemented and are working.
-To avoid missing the submission deadline, I have submitted this repository link one day in advance.
-The remaining parts will be completed and pushed within the given deadline.
-
-Thank you for your understanding!
