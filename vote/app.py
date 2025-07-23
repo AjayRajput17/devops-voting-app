@@ -4,7 +4,7 @@ import os
 import socket 
 import random
 import json
-import logging
+import logging 
 
 
 option_a = os.getenv('OPTION_A', "Cats")
